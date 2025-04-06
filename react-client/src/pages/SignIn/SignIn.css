@@ -1,0 +1,7 @@
+.signin-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: linear-gradient(to right, #007bff, #0056b3);
+}

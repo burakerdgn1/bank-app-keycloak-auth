@@ -1,0 +1,52 @@
+spring:
+  application:
+    name: "gatewayserver"
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: false
+          lower-case-service-id: true
+      httpclient:
+        connect-timeout: 1000
+        response-timeout: 10s
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: "http://localhost:7080/realms/bank-app/protocol/openid-connect/certs"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    gateway:
+      enabled: true
+  info:
+    env:
+      enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+info:
+  app:
+    name: "gatewayserver"
+    description: "Bank Gateway Server for Bank-App Microservices"
+    version: "1.0.0"
+
+logging:
+  level:
+    com:
+      burak:
+        gatewayserver: DEBUG
+
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      slidingWindowSize: 10
+      permittedNumberOfCallsInHalfOpenState: 2
+      failureRateThreshold: 50
+      waitDurationInOpenState: 10000
